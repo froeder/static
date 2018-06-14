@@ -9,9 +9,12 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "material-design-icons-iconfont": "^3.0.3",
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1",
+    "vuetify": "^1.0.19",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
