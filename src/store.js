@@ -10,17 +10,17 @@ export default new Vuex.Store({
     },
 
     actions: {
-        async ['SAVE_USER'](context, userData) {
+        async ['REGISTER'](context, userData) {
             return await axios.post('api/auth/register', userData)
         },
         async ['LOGIN']({commit}, credentials) {
             const token = await axios.post('api/auth/login', credentials)
-            commit('SET_LOGGED_USER', token)
+            commit('SET_TOKEN', token)
         }
     },
 
     mutations: {
-        ['SET_LOGGED_USER'](state, token) {
+        ['SET_TOKEN'](state, token) {
             state.token = token
         }
     }

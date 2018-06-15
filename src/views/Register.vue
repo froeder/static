@@ -1,23 +1,25 @@
 <template>
-    <v-container fluid>
-        <v-slide-y-transition mode="out-in">
-            <v-layout column align-center>
-                <v-card>
-                    <v-card-title>Cadastro</v-card-title>
-                    <v-card-text>
-                        <v-text-field v-model="user.email" id="email" label="E-mail" prepend-icon="email" type="texst"></v-text-field>
-                        <v-text-field v-model="user.password" id="password" label="Senha" prepend-icon="lock" type="password"></v-text-field>
-                        <v-text-field v-model="repassword" id="repassword" label="Confirma a senha" prepend-icon="lock"
-                                      type="password"></v-text-field>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-container>
-                            <v-btn color="success" :disabled="invalidForm" @click="save()">SALVAR</v-btn>
-                        </v-container>
-                    </v-card-actions>
-                </v-card>
-            </v-layout>
-        </v-slide-y-transition>
+    <v-container grid-list-xl text-xs-center>
+        <v-layout row wrap>
+            <v-flex xs10 offset-xs1>
+                <v-form ref="form" v-model="valid" lazy-validation autocomplete="off">
+                    <v-card>
+                        <v-card-title>Cadastro</v-card-title>
+                        <v-card-text>
+                            <v-text-field v-model="user.email" :rules="emailRules" id="email" label="E-mail" prepend-icon="email" type="texst"
+                                          required></v-text-field>
+                            <v-text-field v-model="user.password" :rules="passwordRules" id="password" label="Senha" prepend-icon="lock"
+                                          type="password" required></v-text-field>
+                            <v-text-field v-model="repassword" :rules="repasswordRules" id="repassword" label="Confirma a senha" prepend-icon="lock"
+                                          type="password" required></v-text-field>
+                            <div class="text-xs-center">
+                                <v-btn color="success" :large="true" :disabled="!valid" @click="submit">SALVAR</v-btn>
+                            </div>
+                        </v-card-text>
+                    </v-card>
+                </v-form>
+            </v-flex>
+        </v-layout>
     </v-container>
 </template>
 
@@ -26,21 +28,34 @@
 
     export default {
         data: () => ({
-            repassword: null,
-            user: {}
+            valid: false,
+            emailRules: [
+                v => !!v || 'E-mail é obrigatório',
+                v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail deve ser válido'
+            ],
+            passwordRules: [
+                v => !!v || 'Senha é obrigatória',
+                v => v.length >= 6 || 'Senha deve ter pelo menos 6 caracteres'
+            ],
+            repasswordRules: [
+                v => !!v || 'Senha é obrigatória' //TODO FALTA A CONTRA-SENHA VALIDAR SOMENTE SE FOR IGUAL A OUTRA
+            ],
+            user: {
+                email: '',
+                password: ''
+            },
+            repassword: ''
         }),
-        computed: {
-            invalidForm() {
-                return this.user.password !== this.repassword
-            }
-        },
         methods: {
-            async save() {
-                try {
-                    const savedUser = await this.$store.dispatch('SAVE_USER', this.user)
-                    console.log('Usuario foi salvo com sucesso', savedUser)
-                } catch (err) {
-                    console.log(err)
+            async submit() {
+                if (this.$refs.form.validate()) {
+                    try {
+                        await this.$store.dispatch('REGISTER', this.user)
+                        this.$router.push({path: '/confirmation'})
+                    } catch (err) {
+                        //TODO EXIBIR MENSAGEM DE ERRO NA TELA ATRAVES DE UM TOAST OU ALGO DO TIPO
+                        console.log(err)
+                    }
                 }
             }
         }

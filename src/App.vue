@@ -27,9 +27,11 @@
 </template>
 
 <script>
+    // SUGESTAO: QUEBRAR ESTA TELA EM COMPONENTES: SIDEBAR, TOOLBAR, FOOTER
     export default {
         data() {
             return {
+                title: 'MVP-Saúde',
                 clipped: false,
                 drawer: true,
                 fixed: false,
@@ -41,21 +43,19 @@
                     },
                     {
                         icon: 'cloud_upload',
-                        title: 'Enviar de Arquivo',
+                        title: 'Salvar exame',
                         linkpath: '/upload_pdf'
                     }
                 ],
                 miniVariant: false,
                 right: true,
-                rightDrawer: false,
-                title: 'MVP-Saúde'
+                rightDrawer: false
             }
         },
-        name: 'App',
         methods: {
             linkto(pathname) {
                 this.$router.push({path: pathname})
-            },
+            }
         }
     }
 </script>
