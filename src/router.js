@@ -4,6 +4,7 @@ import Home from './views/Home'
 import Login from './views/Login'
 import Register from './views/Register'
 import Confirmation from './views/Confirmation'
+import SendFile from './views/SendFile' 
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
             path: '/confirmation',
             name: 'confirmation',
             component: Confirmation
+        },
+        {
+            path: '/upload_pdf',
+            name: 'sendFile',
+            component: SendFile
         }
     ]
 })
