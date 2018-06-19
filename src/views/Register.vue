@@ -2,10 +2,12 @@
     <v-container grid-list-xl text-xs-center>
         <v-layout row wrap>
             <v-flex xs10 offset-xs1>
-                <v-form ref="form" v-model="valid" lazy-validation autocomplete="off">
-                    <v-card>
-                        <v-card-title>Cadastro</v-card-title>
-                        <v-card-text>
+                <v-card>
+                    <v-card-title>
+                        <h1>Registrando novo usuário</h1>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-form ref="form" v-model="valid" lazy-validation autocomplete="off">
                             <v-text-field v-model="user.email" :rules="emailRules" id="email" label="E-mail" prepend-icon="email" type="texst"
                                           required></v-text-field>
                             <v-text-field v-model="user.password" :rules="passwordRules" id="password" label="Senha" prepend-icon="lock"
@@ -15,9 +17,9 @@
                             <div class="text-xs-center">
                                 <v-btn color="success" :large="true" :disabled="!valid" @click="submit">SALVAR</v-btn>
                             </div>
-                        </v-card-text>
-                    </v-card>
-                </v-form>
+                        </v-form>
+                    </v-card-text>
+                </v-card>
             </v-flex>
         </v-layout>
     </v-container>

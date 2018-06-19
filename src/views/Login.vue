@@ -4,7 +4,9 @@
             <v-layout column align-center>
                 <v-form autocomplete="off">
                     <v-card>
-                        <v-card-title>Login</v-card-title>
+                        <v-card-title>
+                            <h1>Login</h1>
+                        </v-card-title>
                         <v-card-text>
                             <v-text-field id="email" name="email" label="Email" type="text" v-model="credentials.email" required=""></v-text-field>
                             <v-text-field id="password" name="password" label="Senha" type="password" v-model="credentials.password"

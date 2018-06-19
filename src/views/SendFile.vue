@@ -1,13 +1,15 @@
 <template>
-  <v-container fluid>
+    <v-container fluid>
         <v-slide-y-transition mode="out-in">
             <v-layout column align-center>
+                <h2 class="display-1">Exame médico</h2>
+                <p>Para entrar com os dados de um exame médico basta clicar no botão abaixo e selecionar o arquivo que contém dos dados do exame</p>
                 <v-form autocomplete="off">
-                    <v-card-text>
-                        <h2>Selecione o arquivo</h2>
-                        <input type="file" @change="onFileChange">
-                        <v-btn color="success" :large="true" @click="submit">Salvar</v-btn>
-                    </v-card-text>
+                    <v-btn color="primary" v-if="!uploading" @click="onPickFile">Selecione um arquivo</v-btn>
+                    <input ref="fileInput" @change="onFilePicked" type="file" style="display: none" accept="application/pdf">
+                    <v-progress-circular v-if="uploading" :size="100" :width="15" :rotate="360" :value="progress" color="teal">
+                        {{ progress }}
+                    </v-progress-circular>
                 </v-form>
             </v-layout>
         </v-slide-y-transition>
@@ -15,42 +17,50 @@
 </template>
 
 <script>
-import axios from "axios";
-export default {
-    data () {
-        return {
-            image: ""
-        }
-    },
-    methods: {
-        onFileChange(e) {
-            var files = e.target.files || e.dataTransfer.files;
-            if (!files.length) return;
-            this.createImage(files[0]);
+    /* eslint-disable no-console */
+    export default {
+        data() {
+            return {
+                uploading: false,
+                progress: 0
+            }
         },
-        createImage(file) {
-            var image = new Image();
-            var reader = new FileReader();
-            var vm = this;
-            reader.onload = e => {
-                vm.image = e.target.result;
-                //imagem codificada
-                console.log(e.target.result) 
-                var file = e.target.result
-            };
-            reader.readAsDataURL(file);
-        },
-        removeImage: function(e) {
-            this.image = "";
-        },
-        async submit() {
-            try {
-                await this.$store.dispatch('SENDFILE', this.file)
-            } catch (err) {
-                //TODO EXIBIR MENSAGEM DE ERRO NA TELA ATRAVES DE UM TOAST OU ALGO DO TIPO
-                console.log(err)
+        methods: {
+            onPickFile() {
+                this.$refs.fileInput.click()
+            },
+            onFilePicked(event) {
+                const file = event.target.files[0]
+                const formData = new FormData()
+                formData.append('file', file)
+
+                const reader = new FileReader()
+                reader.onerror = () => this.errorHandler(reader)
+                reader.onprogress = (evt) => this.updateProgressHandler(evt)
+
+                reader.onloadstart = () => {
+                    this.uploading = true
+                }
+
+                reader.onload = () => {
+                    this.progress = 100
+                    this.uploading = false
+                }
+                this.$store.dispatch('UPLOAD_FILE', formData)
+            },
+
+            errorHandler(reader) {
+                reader.abort()
+            },
+
+            updateProgressHandler(evt) {
+                if (evt.lengthComputable) {
+                    var percentLoaded = Math.round((evt.loaded / evt.total) * 100)
+                    if (percentLoaded < 100) {
+                        this.progress = percentLoaded + '%'
+                    }
+                }
             }
         }
     }
-};
 </script>

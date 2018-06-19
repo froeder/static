@@ -6,7 +6,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        token: null
+        token: null,
+        uploading: false
     },
 
     actions: {
@@ -16,6 +17,10 @@ export default new Vuex.Store({
         async ['LOGIN']({commit}, credentials) {
             const token = await axios.post('api/auth/login', credentials)
             commit('SET_TOKEN', token)
+        },
+        async ['UPLOAD_FILE'](context, formData) {
+            const {data} = await axios.post('api/files', formData)
+            return data
         }
     },
 
