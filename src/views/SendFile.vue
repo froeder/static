@@ -22,6 +22,8 @@
 
 <script>
     /* eslint-disable no-console */
+    import events from '../events'
+
     export default {
         data() {
             return {
@@ -45,7 +47,7 @@
                     const file = event.target.files[0]
                     const formData = new FormData()
                     formData.append('file', file)
-                    const filedata = await this.$store.dispatch('UPLOAD_FILE', formData)
+                    const filedata = await this.$store.dispatch(events.actions.UPLOAD_FILE, formData)
                     this.uploadedFiledata = filedata
                 } catch (err) {
                     console.log('ERRO AO SUBIR ARQUIVO')
