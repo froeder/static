@@ -43,9 +43,9 @@
                 fixed: false,
                 items: [
                     {
-                        icon: 'account_box',
-                        title: 'Login',
-                        linkpath: '/'
+                        icon: 'home',
+                        title: 'Home',
+                        linkpath: '/home'
                     },
                     {
                         icon: 'cloud_upload',
@@ -53,9 +53,19 @@
                         linkpath: '/upload_pdf'
                     },
                     {
+                        icon: 'folder',
+                        title: 'Histórico',
+                        linkpath: '/history_patient'
+                    },
+                    {
                         icon: 'settings',
                         title: 'Gerar Token',
                         linkpath: '/generate_token'
+                    },
+                    {
+                        icon: 'account_box',
+                        title: 'Sair',
+                        linkpath: '/logout'
                     }
                 ],
                 miniVariant: false,
