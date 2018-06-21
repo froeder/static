@@ -51,6 +51,11 @@
                         icon: 'cloud_upload',
                         title: 'Salvar exame',
                         linkpath: '/upload_pdf'
+                    },
+                    {
+                        icon: 'settings',
+                        title: 'Gerar Token',
+                        linkpath: '/generate_token'
                     }
                 ],
                 miniVariant: false,
