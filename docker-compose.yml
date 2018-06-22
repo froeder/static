@@ -1,0 +1,75 @@
+version: '3'
+services:
+  gateway:
+    image: codate/gateway:latest
+    ports:
+      - "80:80"
+    links:
+      - auth:authserver
+      - file:fileserver
+      - exam:examserver
+    extra_hosts:
+      - "staticserver:10.100.10.180"
+    networks:
+      - thisnet
+    depends_on:
+      - file
+      - auth
+  file:
+    image: codate/file:latest
+    ports:
+      - "8081:8081"
+    networks:
+      - thisnet
+    environment:
+      - PORT=8081
+      - URL=mongodb://mongo:27017/file
+    #command: sh -c './wait-for mongo:27017 -- npm start'
+    depends_on:
+      - mongo
+  auth:
+    image: codate/auth:latest
+    ports:
+      - "8082:8082"
+    networks:
+      - thisnet
+    environment:
+      - PORT=8082
+      - URL=mongodb://mongo:27017/auth
+    #command: sh -c './wait-for mongo:27017 -- npm start'
+    depends_on:
+      - mongo
+  exam:
+    image: codate/exam:latest
+    ports:
+      - "8084:8084"
+    networks:
+      - thisnet
+    environment:
+      - PORT=8084
+      - URL=mongodb://mongo:27017/exam
+    #command: sh -c './wait-for mongo:27017 -- npm start'
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:3
+    ports:
+      - "27017:27017"
+    networks:
+      - thisnet
+    volumes:
+      - mongodata:/data/db
+  portainer:
+    image: portainer/portainer:latest
+    ports:
+     - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainerdata:/data
+    networks:
+      - thisnet
+volumes:
+  mongodata:
+  portainerdata:
+networks:
+  thisnet:
