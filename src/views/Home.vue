@@ -1,10 +1,13 @@
 <template>
-    <div class="home">
-        <h1>Tela protegida pelo login</h1>
-    </div>
+    <v-container>
+        <v-card>
+            <v-card-title>Meu Perfil</v-card-title>
+        </v-card>
+    </v-container>
 </template>
 
 <script>
+//TODO: Fazer resumo do paciente
     export default {
         components: {
         }

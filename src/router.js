@@ -5,6 +5,9 @@ import Login from './views/Login'
 import Register from './views/Register'
 import Confirmation from './views/Confirmation'
 import SendFile from './views/SendFile' 
+import GenerateToken from './views/GenerateToken'
+import HistoryPatient from './views/HistoryPatient'
+import Logout from './views/Logout'
 
 Vue.use(Router)
 
@@ -34,6 +37,21 @@ export default new Router({
             path: '/upload_pdf',
             name: 'sendFile',
             component: SendFile
+        },
+        {
+            path: '/generate_token',
+            name: 'generateToken',
+            component: GenerateToken
+        },
+        {
+            path: '/history_patient',
+            name: 'historyPatient',
+            component: HistoryPatient
+        },
+        {
+            path: '/logout',
+            name: 'logout',
+            component: Logout
         }
     ]
 })

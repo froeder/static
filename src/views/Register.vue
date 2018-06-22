@@ -15,6 +15,7 @@
                             <v-text-field v-model="repassword" :rules="repasswordRules" id="repassword" label="Confirma a senha" prepend-icon="lock"
                                           type="password" required></v-text-field>
                             <div class="text-xs-center">
+                                <v-btn color="info" :large="true" to="/">Voltar</v-btn>
                                 <v-btn color="success" :large="true" :disabled="!valid" @click="submit">SALVAR</v-btn>
                             </div>
                         </v-form>

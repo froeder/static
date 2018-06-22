@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-navigation-drawer persistent :clipped="clipped" v-model="drawer" enable-resize-watcher fixed app>
+        <v-navigation-drawer persistent :clipped="clipped" v-model="drawer" enable-resize-watcher fixed>
             <v-list>
                 <v-list-tile value="true" v-for="(item, i) in items" :key="i" @click="linkto(item.linkpath)">
                     <v-list-tile-action>
@@ -20,15 +20,21 @@
         <v-content>
             <router-view/>
         </v-content>
-        <v-footer :fixed="fixed" app>
-            <span> PET-Sistemas UFMS & Living Lab &copy; 2018</span>
-        </v-footer>
+        <Footer></Footer>
     </v-app>
 </template>
 
 <script>
-    // SUGESTAO: QUEBRAR ESTA TELA EM COMPONENTES: SIDEBAR, TOOLBAR, FOOTER
+    import Toolbar from './menu/Toolbar'
+    import Footer from './menu/Footer'
+    import NavigationDrawer from './menu/NavigationDrawer'
+
     export default {
+        components: {
+            Toolbar,
+            Footer,
+            NavigationDrawer
+        },
         data() {
             return {
                 title: 'MVP-Saúde',
@@ -37,14 +43,29 @@
                 fixed: false,
                 items: [
                     {
-                        icon: 'account_box',
-                        title: 'Login',
-                        linkpath: '/'
+                        icon: 'home',
+                        title: 'Home',
+                        linkpath: '/home'
                     },
                     {
                         icon: 'cloud_upload',
                         title: 'Salvar exame',
                         linkpath: '/upload_pdf'
+                    },
+                    {
+                        icon: 'folder',
+                        title: 'Histórico',
+                        linkpath: '/history_patient'
+                    },
+                    {
+                        icon: 'settings',
+                        title: 'Gerar Token',
+                        linkpath: '/generate_token'
+                    },
+                    {
+                        icon: 'account_box',
+                        title: 'Sair',
+                        linkpath: '/logout'
                     }
                 ],
                 miniVariant: false,
