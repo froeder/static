@@ -37,6 +37,7 @@
                 try {
                     await this.$store.dispatch('LOGIN', this.credentials)
                     this.$router.push({path: '/home'})
+                    console.log(this.$store.state.user_logged)
                 } catch (err) {
                     //TODO EXIBIR MENSAGEM DE ERRO NA TELA ATRAVES DE UM TOAST OU ALGO DO TIPO
                     console.log(err)

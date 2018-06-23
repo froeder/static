@@ -16,9 +16,9 @@
                                             color="teal">
                             {{ progress }} %
                         </v-progress-circular>
-                        <p v-if="uploadedFiledata">
+                        <v-alert :value="true" type="success" v-if="uploadedFiledata">
                             Parabens, o arquivo {{uploadedFiledata.filename}} foi carregado com sucesso
-                        </p>
+                        </v-alert>
                         <v-alert v-if="errorUpload" :value="true" type="error">
                             O arquivo nao foi enviado
                         </v-alert>
