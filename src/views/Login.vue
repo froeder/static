@@ -30,7 +30,6 @@
 
 <script>
     /* eslint-disable no-console */
-
     export default {
         data: () => ({
             credentials: {},
