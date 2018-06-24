@@ -48,7 +48,10 @@ export default new Vuex.Store({
                 commit(events.mutations.SET_UNLOADING)
                 throw err
             }
-        }
+        },
+        async [events.actions.GET_FILES](context, formData) {
+            return await axios.post('/api/files/:filename', formData)
+        },
     },
 
     mutations: {

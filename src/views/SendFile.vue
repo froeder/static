@@ -37,7 +37,8 @@
         data() {
             return {
                 uploadedFiledata: null,
-                errorUpload: false
+                errorUpload: false,
+                user_logged: ''
             }
         },
         computed: {
@@ -58,7 +59,10 @@
                     const formData = new FormData()
                     formData.append('file', file)
                     const filedata = await this.$store.dispatch(events.actions.UPLOAD_FILE, formData)
+                    filedata.user_logged = this.$store.state.user_logged
                     this.uploadedFiledata = filedata
+
+                    console.log(filedata)
                 } catch (err) {
                     console.log('ERRO AO SUBIR ARQUIVO')
                     this.errorUpload = true

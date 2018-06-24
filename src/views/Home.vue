@@ -5,7 +5,7 @@
                <h2>Meu Perfil</h2>
             </v-card-title>
             <v-card-text>
-                <p>Nome: </p>
+                <p>Email: {{this.$store.state.user_logged}} </p>
                 <p>Último arquivo enviado: </p>
             </v-card-text>
         </v-card>
