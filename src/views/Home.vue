@@ -1,7 +1,13 @@
 <template>
     <v-container>
         <v-card>
-            <v-card-title>Meu Perfil</v-card-title>
+            <v-card-title>
+               <h2>Meu Perfil</h2>
+            </v-card-title>
+            <v-card-text>
+                <p>Email: {{this.$store.state.user_logged}} </p>
+                <p>Último arquivo enviado: </p>
+            </v-card-text>
         </v-card>
     </v-container>
 </template>
