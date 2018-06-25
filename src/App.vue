@@ -61,7 +61,7 @@
                     {
                         icon: 'account_box',
                         title: 'Sair',
-                        linkpath: '/logout'
+                        linkpath: '/'
                     }
                 ],
                 miniVariant: false,

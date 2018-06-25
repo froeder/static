@@ -8,13 +8,15 @@ import SendFile from './views/SendFile'
 import GenerateToken from './views/GenerateToken'
 import HistoryPatient from './views/HistoryPatient'
 import Logout from './views/Logout'
+import Initial from './views/Initial'
+import Token from './views/Token'
 
 Vue.use(Router)
 
 export default new Router({
     routes: [
         {
-            path: '/',
+            path: '/login',
             name: 'login',
             component: Login
         },
@@ -52,6 +54,16 @@ export default new Router({
             path: '/logout',
             name: 'logout',
             component: Logout
+        },
+        {
+            path: '/',
+            name: 'initial',
+            component: Initial
+        },
+        {
+            path: '/token',
+            name: 'token',
+            component: Token
         }
     ]
 })
