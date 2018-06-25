@@ -11,6 +11,7 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 Vue.config.productionTip = false
 Vue.use(VeeValidate)
 Vue.use(Vuetify)
+Vue.use(require('vue-moment'));
 
 new Vue({
     router,

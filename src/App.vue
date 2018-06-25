@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-navigation-drawer persistent :clipped="clipped" v-model="drawer" enable-resize-watcher fixed>
+        <v-navigation-drawer v-if="this.$store.state.token" temporary :clipped="clipped" v-model="drawer" enable-resize-watcher fixed>
             <v-list>
                 <v-list-tile value="true" v-for="(item, i) in items" :key="i" @click="linkto(item.linkpath)">
                     <v-list-tile-action>
@@ -25,21 +25,17 @@
 </template>
 
 <script>
-    import Toolbar from './menu/Toolbar'
     import Footer from './menu/Footer'
-    import NavigationDrawer from './menu/NavigationDrawer'
 
     export default {
         components: {
-            Toolbar,
-            Footer,
-            NavigationDrawer
+            Footer
         },
         data() {
             return {
                 title: 'MVP-Saúde',
                 clipped: false,
-                drawer: true,
+                drawer: false,
                 fixed: false,
                 items: [
                     {

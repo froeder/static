@@ -11,6 +11,9 @@
                             <v-text-field id="email" name="email" label="Email" type="text" v-model="credentials.email" required=""></v-text-field>
                             <v-text-field id="password" name="password" label="Senha" type="password" v-model="credentials.password"
                                           required=""></v-text-field>
+                            <v-alert :value="true" type="error" v-if="authorization == 'error'">
+                                Erro ao fazer login
+                            </v-alert>
                         </v-card-text>
                         <v-card-actions>
                             <v-container>
@@ -27,19 +30,22 @@
 
 <script>
     /* eslint-disable no-console */
-
     export default {
         data: () => ({
-            credentials: {}
+            credentials: {},
+            authorization: ''
         }),
         methods: {
             async submit() {
                 try {
                     await this.$store.dispatch('LOGIN', this.credentials)
                     this.$router.push({path: '/home'})
+                    console.log(this.$store.state.user_logged)
+                    this.authorization = 'true'
                 } catch (err) {
                     //TODO EXIBIR MENSAGEM DE ERRO NA TELA ATRAVES DE UM TOAST OU ALGO DO TIPO
                     console.log(err)
+                    this.authorization = 'error'
                 }
             }
         }

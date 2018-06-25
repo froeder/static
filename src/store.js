@@ -9,16 +9,21 @@ export default new Vuex.Store({
     state: {
         token: null,
         loading: false,
-        fileUploadProgress: 0
+        fileUploadProgress: 0,
+        user_logged: ''
     },
 
     actions: {
         async [events.actions.REGISTER](context, userData) {
             return await axios.post('api/auth/register', userData)
         },
+        async [events.actions.COMPLETE_REGISTER](context, userData) {
+            return await axios.post('api/organization/register', userData)
+        },
         async [events.actions.LOGIN]({commit}, credentials) {
             const {data} = await axios.post('api/auth/login', credentials)
             commit(events.mutations.SET_TOKEN, data.token)
+            this.state.user_logged = credentials.email
         },
         async [events.actions.CHECK_EMAIL](context, check_email) {
             return await axios.get('api/auth/exists/:', check_email)
@@ -46,7 +51,10 @@ export default new Vuex.Store({
                 commit(events.mutations.SET_UNLOADING)
                 throw err
             }
-        }
+        },
+        async [events.actions.GET_FILES](context, formData) {
+            return await axios.post('/api/files/:filename', formData)
+        },
     },
 
     mutations: {
