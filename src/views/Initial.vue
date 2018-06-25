@@ -11,3 +11,7 @@
         </v-layout>
     </v-container>
 </template>
+
+<script>
+//TODO: CRIAR COMPONENTE COM HEADERS E FOOTER PADRÕES 
+</script>
