@@ -20,6 +20,9 @@ export default new Vuex.Store({
             const {data} = await axios.post('api/auth/login', credentials)
             commit(events.mutations.SET_TOKEN, data.token)
         },
+        async [events.actions.CHECK_EMAIL](context, check_email) {
+            return await axios.get('api/auth/exists/:', check_email)
+        },
         async [events.actions.UPLOAD_FILE]({commit}, formData) {
             const onUploadProgress = (progressEvent) => {
                 const progress = parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total))
