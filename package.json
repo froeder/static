@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prestart": "docker-compose up -d",
     "start": "vue-cli-service serve",
+    "poststart": "docker-compose stop",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
