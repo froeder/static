@@ -1,30 +1,28 @@
 <template>
     <v-container fluid>
         <v-slide-y-transition mode="out-in">
-            <v-layout column align-center>
-                <v-card>
-                    <v-card-title>
-                        <h1>Exame médico</h1>
-                    </v-card-title>
-                    <v-card-text>Para entrar com os dados de um exame médico basta clicar no botão abaixo e selecionar o arquivo que contém dos dados do exame</v-card-text>
-                    <v-form autocomplete="off">
-                        <v-btn color="primary" v-if="!loading" @click="onPickFile">Selecione um arquivo</v-btn>
-                        <div class="text-xs-center">
-                            <input ref="fileInput" @change="onFilePicked" type="file" style="display: none" accept="application/pdf">
-                        </div>
-                        <v-progress-circular v-if="loading" :size="100" :width="15" :rotate="360" :value="progress"
-                                            color="teal">
-                            {{ progress }} %
-                        </v-progress-circular>
-                        <v-alert :value="true" type="success" v-if="uploadedFiledata">
-                            Parabens, o arquivo {{uploadedFiledata.filename}} foi carregado com sucesso
-                        </v-alert>
-                        <v-alert v-if="errorUpload" :value="true" type="error">
-                            O arquivo nao foi enviado
-                        </v-alert>
-                    </v-form>
-                </v-card>
-            </v-layout>
+            <v-card>
+                <v-card-title>
+                    <h1>Exame médico</h1>
+                </v-card-title>
+                <v-card-text>Para entrar com os dados de um exame médico basta clicar no botão abaixo e selecionar o arquivo que contém dos dados do exame</v-card-text>
+                <v-form autocomplete="off">
+                    <v-btn color="primary" v-if="!loading" @click="onPickFile">Selecione um arquivo</v-btn>
+                    <div class="text-xs-center">
+                        <input ref="fileInput" @change="onFilePicked" type="file" style="display: none" accept="application/pdf">
+                    </div>
+                    <v-progress-circular v-if="loading" :size="100" :width="15" :rotate="360" :value="progress"
+                                        color="teal">
+                        {{ progress }} %
+                    </v-progress-circular>
+                    <v-alert :value="true" type="success" v-if="uploadedFiledata">
+                        Parabens, o arquivo {{uploadedFiledata.filename}} foi carregado com sucesso
+                    </v-alert>
+                    <v-alert v-if="errorUpload" :value="true" type="error">
+                        O arquivo nao foi enviado
+                    </v-alert>
+                </v-form>
+            </v-card>
         </v-slide-y-transition>
     </v-container>
 </template>
