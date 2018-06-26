@@ -17,6 +17,7 @@
     "pdf-to-text": "0.0.6",
     "pdftohtmljs": "^0.5.2",
     "register-service-worker": "^1.0.0",
+    "vee-validate": "^2.1.0-beta.2",
     "vue": "^2.5.16",
     "vue-moment": "^4.0.0",
     "vue-pdf": "^3.3.1",

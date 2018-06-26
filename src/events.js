@@ -2,7 +2,8 @@ export default {
     actions: {
         UPLOAD_FILE: 'UPLOAD_FILE',
         REGISTER: 'REGISTER',
-        LOGIN: 'LOGIN'
+        LOGIN: 'LOGIN',
+        CHECK_EMAIL: 'CHECK_EMAIL'
     },
     mutations: {
         SET_TOKEN: 'SET_TOKEN',
