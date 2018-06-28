@@ -8,11 +8,11 @@
                     </v-card-title>
                     <v-card-text>
                         <v-form ref="form" v-model="valid" lazy-validation autocomplete="off">
-                            <v-text-field v-model="user.email" :rules="emailRules" id="email" label="E-mail" prepend-icon="email" type="texst"
+                            <v-text-field v-model="user.email" name="email" v-validate="'required|email'" :error-messages="errors.collect('email')" id="email" label="E-mail" prepend-icon="email" type="texst"
                                           required></v-text-field>
-                            <v-text-field v-model="user.password" :rules="passwordRules" id="password" label="Senha" prepend-icon="lock"
+                            <v-text-field v-model="user.password" name="password" v-validate="'required|min_value:6'" :error-messages="errors.collect('password')" id="password"  label="Senha" prepend-icon="lock"
                                           type="password" required></v-text-field>
-                            <v-text-field v-model="repassword" :rules="repasswordRules" id="repassword" label="Confirma a senha" prepend-icon="lock"
+                            <v-text-field v-model="repassword" name="password_confirmation" v-validate="'required|min_value:6|confirmed:password'" :error-messages="errors.collect('password_confirmation')" id="password_confirmation" label="Confirma a senha" prepend-icon="lock"
                                           type="password" required></v-text-field>
                             <div class="text-xs-center">
                                 <v-btn color="info" :large="true" to="/">Voltar</v-btn>
@@ -30,25 +30,44 @@
     /* eslint-disable no-console */
 
     export default {
+        $_veeValidate: {
+            validator: 'new'
+        },
         data: () => ({
             valid: false,
-            emailRules: [
-                v => !!v || 'E-mail é obrigatório',
-                v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail deve ser válido'
-            ],
-            passwordRules: [
-                v => !!v || 'Senha é obrigatória',
-                v => v.length >= 6 || 'Senha deve ter pelo menos 6 caracteres'
-            ],
-            repasswordRules: [
-                v => !!v || 'Senha é obrigatória' //TODO FALTA A CONTRA-SENHA VALIDAR SOMENTE SE FOR IGUAL A OUTRA
-            ],
             user: {
                 email: '',
                 password: ''
             },
-            repassword: ''
+            repassword:'',
+            dictionary: {
+                pt_br:{
+                    
+                }
+            },
+            dictionary: {
+                pt_br:{
+                    custom: {
+                        email: {
+                            required: () => 'Endereço de e-mail requerido',
+                        },
+                        password: {
+                            required: () => 'Senha requerido',
+                            min_value: () => 'Senha deverá ter pelo menos 6 caracteres'
+                        },
+                        password_confirmation: {
+                            required: () => 'Senha requerida',
+                            min_value: () => 'Senha deverá ter pelo menos 6 caracteres',
+                            confirmed:()  => 'A senhas não conferem'
+                        },
+                    }
+                }
+            }
         }),
+
+        mounted () {
+            this.$validator.localize('pt_br', this.dictionary)
+        },
         methods: {
             async submit() {
                 if (this.$refs.form.validate()) {
@@ -60,7 +79,14 @@
                         console.log(err)
                     }
                 }
+            },
+            async check_email() {
+                try {
+                    (await this.$store.dispatch('CHECK_EMAIL', this.user.email)).data.exist
+                } catch (err) {
+                    console.log(err)
+                }
             }
-        }
+        },
     }
 </script>
