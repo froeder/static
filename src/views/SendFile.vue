@@ -102,7 +102,6 @@ export default {
         filedata.user_logged = this.$store.state.user_logged;
         this.uploadedFiledata = filedata;
         this.filename = this.uploadedFiledata.originalname
-
       } catch (err) {
         console.log("ERRO AO SUBIR ARQUIVO");
         this.errorUpload = true;
