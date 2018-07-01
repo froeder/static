@@ -34,17 +34,18 @@ services:
       - thisnet
     environment:
       - PORT=8082
-      - URL=mongodb://mongo:27017/auth
+      - DB_URL=mongodb://mongo:27017/auth
+      - DOMAIN=localhost
     depends_on:
       - mongo
   exam:
     image: codate/exam:latest
     ports:
-      - "8084:8084"
+      - "8083:8083"
     networks:
       - thisnet
     environment:
-      - PORT=8084
+      - PORT=8083
       - URL=mongodb://mongo:27017/exam
     depends_on:
       - mongo
@@ -56,15 +57,6 @@ services:
       - thisnet
     volumes:
       - mongodata:/data/db
-  portainer:
-    image: portainer/portainer:latest
-    ports:
-     - "9000:9000"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - portainerdata:/data
-    networks:
-      - thisnet
 volumes:
   mongodata:
   portainerdata:

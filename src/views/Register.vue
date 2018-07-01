@@ -42,11 +42,6 @@
             repassword:'',
             dictionary: {
                 pt_br:{
-                    
-                }
-            },
-            dictionary: {
-                pt_br:{
                     custom: {
                         email: {
                             required: () => 'Endereço de e-mail requerido',
