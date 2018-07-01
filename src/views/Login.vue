@@ -22,6 +22,9 @@
                             </v-container>
                         </v-card-actions>
                     </v-card>
+                    <v-btn color="info" block to="/">
+                    <v-icon>arrow_back</v-icon>
+                    Voltar</v-btn>
                 </v-form>
             </v-layout>
         </v-slide-y-transition>

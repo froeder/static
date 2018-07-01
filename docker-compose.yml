@@ -9,7 +9,7 @@ services:
       - file:fileserver
       - exam:examserver
     extra_hosts:
-      - "staticserver:172.16.27.162"
+      - "staticserver:192.168.25.18"
     networks:
       - thisnet
     depends_on:
@@ -24,7 +24,6 @@ services:
     environment:
       - PORT=8081
       - URL=mongodb://mongo:27017/file
-    #command: sh -c './wait-for mongo:27017 -- npm start'
     depends_on:
       - mongo
   auth:
@@ -35,20 +34,19 @@ services:
       - thisnet
     environment:
       - PORT=8082
-      - URL=mongodb://mongo:27017/auth
-    #command: sh -c './wait-for mongo:27017 -- npm start'
+      - DB_URL=mongodb://mongo:27017/auth
+      - DOMAIN=localhost
     depends_on:
       - mongo
   exam:
     image: codate/exam:latest
     ports:
-      - "8084:8084"
+      - "8083:8083"
     networks:
       - thisnet
     environment:
-      - PORT=8084
+      - PORT=8083
       - URL=mongodb://mongo:27017/exam
-    #command: sh -c './wait-for mongo:27017 -- npm start'
     depends_on:
       - mongo
   mongo:
@@ -59,15 +57,6 @@ services:
       - thisnet
     volumes:
       - mongodata:/data/db
-  portainer:
-    image: portainer/portainer:latest
-    ports:
-     - "9000:9000"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - portainerdata:/data
-    networks:
-      - thisnet
 volumes:
   mongodata:
   portainerdata:

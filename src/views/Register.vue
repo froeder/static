@@ -66,7 +66,7 @@
                     password_confirmation: {
                         required: () => 'Confirmação de senha requerida',
                         min: () => 'Senha deverá ter pelo menos 6 caracteres',
-                    },
+                    }
                 }
             }
         }),

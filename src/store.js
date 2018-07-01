@@ -15,18 +15,18 @@ export default new Vuex.Store({
 
     actions: {
         async [events.actions.REGISTER](context, userData) {
-            return await axios.post('api/auth/register', userData)
+            return await axios.post('auth/register', userData)
         },
         async [events.actions.COMPLETE_REGISTER](context, userData) {
             return await axios.post('api/organization/register', userData)
         },
         async [events.actions.LOGIN]({commit}, credentials) {
-            const {data} = await axios.post('api/auth/login', credentials)
+            const {data} = await axios.post('auth/login', credentials)
             commit(events.mutations.SET_TOKEN, data.token)
             this.state.user_logged = credentials.email
         },
         async [events.actions.CHECK_EMAIL](context, check_email) {
-            return await axios.get('api/auth/exists/:', check_email)
+            return await axios.get('auth/exists/:', check_email)
         },
         async [events.actions.UPLOAD_FILE]({commit}, formData) {
             const onUploadProgress = (progressEvent) => {
