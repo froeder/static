@@ -10,24 +10,29 @@ export default new Vuex.Store({
         token: null,
         loading: false,
         fileUploadProgress: 0,
-        user_logged: ''
+        fileUploadName: null,
+        loggedUser: null
     },
 
     actions: {
         async [events.actions.REGISTER](context, userData) {
             return await axios.post('auth/register', userData)
         },
+
         async [events.actions.COMPLETE_REGISTER](context, userData) {
             return await axios.post('api/organization/register', userData)
         },
+
         async [events.actions.LOGIN]({commit}, credentials) {
             const {data} = await axios.post('auth/login', credentials)
             commit(events.mutations.SET_TOKEN, data.token)
-            this.state.user_logged = credentials.email
+            commit(events.mutations.SET_LOGGED_USER, credentials.email)
         },
+
         async [events.actions.CHECK_EMAIL](context, check_email) {
             return await axios.get('auth/exists/:', check_email)
         },
+
         async [events.actions.UPLOAD_FILE]({commit}, formData) {
             const onUploadProgress = (progressEvent) => {
                 const progress = parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total))
@@ -43,32 +48,58 @@ export default new Vuex.Store({
             try {
                 commit(events.mutations.SET_LOADING)
                 commit(events.mutations.SET_FILE_UPLOAD_PROGRESS, 0)
+                commit(events.mutations.SET_FILE_UPLOAD_NAME, null)
+
                 const {data} = await axios.post('api/files', formData, options)
+
                 commit(events.mutations.SET_UNLOADING)
+                commit(events.mutations.SET_FILE_UPLOAD_NAME, data.filename)
                 return data
+
             } catch (err) {
                 commit(events.mutations.SET_FILE_UPLOAD_PROGRESS, 0)
                 commit(events.mutations.SET_UNLOADING)
                 throw err
             }
         },
+
         async [events.actions.GET_FILES](context, formData) {
             return await axios.post('/api/files/:filename', formData)
         },
+
+        async [events.actions.CREATE_EXAM](context, exam) {
+            return await axios.post('/exams', exam)
+        },
+
+        async [events.actions.GET_MY_EXAMS]({state}) {
+            const {data} = await axios.get(`/exams/mine/${state.loggedUser}`)
+            return data
+        }
     },
 
     mutations: {
         [events.mutations.SET_TOKEN](state, token) {
             state.token = token
         },
+
         [events.mutations.SET_FILE_UPLOAD_PROGRESS](state, progress) {
             state.fileUploadProgress = progress
         },
+
         [events.mutations.SET_LOADING](state) {
             state.loading = true
         },
+
         [events.mutations.SET_UNLOADING](state) {
             state.loading = false
+        },
+
+        [events.mutations.SET_FILE_UPLOAD_NAME](state, name) {
+            state.fileUploadName = name
+        },
+
+        [events.mutations.SET_LOGGED_USER](state, loggedUser) {
+            state.loggedUser = loggedUser
         }
     }
 })
