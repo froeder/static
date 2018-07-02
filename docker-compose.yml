@@ -9,7 +9,7 @@ services:
       - file:fileserver
       - exam:examserver
     extra_hosts:
-      - "staticserver:172.16.27.156"
+      - "staticserver:192.168.25.18"
     networks:
       - thisnet
     depends_on:
@@ -24,7 +24,6 @@ services:
     environment:
       - PORT=8081
       - URL=mongodb://mongo:27017/file
-    #command: sh -c './wait-for mongo:27017 -- npm start'
     depends_on:
       - mongo
   auth:
@@ -36,7 +35,6 @@ services:
     environment:
       - PORT=8082
       - URL=mongodb://mongo:27017/auth
-    #command: sh -c './wait-for mongo:27017 -- npm start'
     depends_on:
       - mongo
   exam:
@@ -48,7 +46,6 @@ services:
     environment:
       - PORT=8084
       - URL=mongodb://mongo:27017/exam
-    #command: sh -c './wait-for mongo:27017 -- npm start'
     depends_on:
       - mongo
   mongo:
