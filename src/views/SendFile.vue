@@ -51,7 +51,7 @@
                     <v-stepper-content step="3">
                         <v-card color="grey lighten-4" class="mb-5">
                             <v-card-text>
-                                <p>Nome do arquivo: {{this.filename}}</p>
+                                <p>Nome do arquivo: {{this.fileName}}</p>
                                 <p>Outros</p>
                             </v-card-text> 
                         </v-card>
@@ -108,6 +108,11 @@ export default {
         this.errorUpload = true;
       }
     }
+  },
+  create (){
+      this.user_logged = this.$store.state.user_logged
+
+      console.log(this.user_logged)
   }
 }
 </script>

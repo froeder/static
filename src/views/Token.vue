@@ -9,11 +9,12 @@
                     </v-card-title>
                     <v-card-text>
                         <v-text-field
-                        name="searchToken"
+                        name="token"
                         label="Digite o Token recebido"
                         prepend-icon="search"
+                        v-model="this.token"
                         ></v-text-field>
-                        <v-btn color="info" block>Buscar</v-btn>
+                        <v-btn color="info" @click="findToken()" block>Buscar</v-btn>
                     </v-card-text>
                     
                 </v-card>
@@ -26,3 +27,19 @@
         </v-slide-y-transition>
     </v-container>
 </template>
+
+
+<script>
+export default {
+    data () {
+        return {
+            token: ''
+        }
+    },
+    methods:{
+        findToken () {
+            console.log(this.token)
+        }
+    }
+}
+</script>
