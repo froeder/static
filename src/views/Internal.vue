@@ -3,7 +3,9 @@
         <v-container fill-height>
             <v-layout align-center>
                 <v-flex text-xs-center>
-                    <h3 class="display-3">Bem-vindo ao Medical Records</h3>
+                    <h3 class="display-1">Bem-vindo</h3>
+                    <br>
+                    <v-divider></v-divider>
                     <span class="subheading">
                         Adicione aqui todos os seus exames médicos
                     </span>
