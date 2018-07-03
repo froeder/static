@@ -24,7 +24,7 @@
                     {
                         icon: 'home',
                         title: 'Home',
-                        linkpath: '/home'
+                        linkpath: '/internal'
                     },
                     {
                         icon: 'cloud_upload',
