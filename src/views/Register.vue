@@ -8,17 +8,17 @@
                             <h2>Cadastrar novo usuário</h2>
                         </v-card-title>
                         <v-form autocomplete="off" v-on:submit.prevent="submit">
-                            <v-text-field prepend-icon="email" name="email" label="E-mail" type="text"
-                                          v-model="user.email" :error-messages="errors.collect('E-mail')"
-                                          v-validate="'required|email|unique'" data-vv-name="E-mail"></v-text-field>
+                            <v-text-field id="email" prepend-icon="email" name="email" label="E-mail" type="text"
+                                          v-model="user.email" :error-messages="errors.collect('email')"
+                                          v-validate="'required|email|unique'"></v-text-field>
 
-                            <v-text-field prepend-icon="lock" name="password" label="Senha" type="password"
-                                          v-model="user.password" :error-messages="errors.collect('Senha')"
-                                          v-validate="'required'" data-vv-name="Senha"></v-text-field>
+                            <v-text-field id="senha" prepend-icon="lock" name="senha" label="Senha" type="password"
+                                          v-model="user.password" :error-messages="errors.collect('senha')"
+                                          v-validate="'required'"></v-text-field>
 
-                            <v-text-field prepend-icon="lock" name="confirmPassword" label="Confirmação" type="password"
-                                          v-model="confirmPassword" :error-messages="errors.collect('Confirmação')"
-                                          v-validate="'confirmed:Senha'" data-vv-name="Confirmação"></v-text-field>
+                            <v-text-field id="confirma" prepend-icon="lock" name="confirma" label="Confirma" type="password"
+                                          v-model="user.confirm" :error-messages="errors.collect('confirma')"
+                                          v-validate="'required|confirmed:senha'"></v-text-field>
 
                             <v-btn color="success" block type="submit" :disabled="errors.any()">SALVAR</v-btn>
                             <v-divider></v-divider>
@@ -47,8 +47,10 @@
         },
         data() {
             return {
-                user: {},
-                confirmPassword: undefined,
+                user: {
+                    password: null,
+                    confirm: null
+                },
                 message: {
                     show: false,
                     text: '',
@@ -66,7 +68,7 @@
             async register() {
                 try {
                     await this.$store.dispatch(events.actions.REGISTER, this.user)
-                    this.$router.push({path: '/login'})
+                    this.$router.push({path: '/confirmation'})
                 } catch (err) {
                     this.message.show = true
                     this.message.text = err
