@@ -1,5 +1,6 @@
 <template>
-    <v-navigation-drawer persistent :clipped="clipped" v-model="drawer" enable-resize-watcher fixed>
+    <v-navigation-drawer app v-if="this.$store.state.token" temporary :clipped="clipped" v-model="drawer"
+                         enable-resize-watcher fixed>
         <v-list>
             <v-list-tile value="true" v-for="(item, i) in items" :key="i" @click="linkto(item.linkpath)">
                 <v-list-tile-action>
@@ -15,15 +16,10 @@
 
 <script>
     export default {
-        data() {
-            return {
-                title: 'MVP-Saúde',
-                clipped: false,
-                drawer: true,
-                fixed: false,
-                miniVariant: false,
-                right: true,
-                rightDrawer: false
+        props: ['clipped', 'drawer', 'items'],
+        methods: {
+            linkto(pathname) {
+                this.$router.push({path: pathname})
             }
         }
     }

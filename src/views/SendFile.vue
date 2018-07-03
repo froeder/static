@@ -60,6 +60,9 @@
                 return true
             }
         },
+        created() {
+            this.$store.commit(events.mutations.SET_FILE_UPLOAD_PROGRESS, 0)
+        },
         methods: {
             nextStep() {
                 this.currentStep++

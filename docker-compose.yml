@@ -17,7 +17,7 @@ services:
       - file:fileserver
       - exam:examserver
     extra_hosts:
-      - "staticserver:172.50.4.148"
+      - "staticserver:192.168.25.17"
     networks:
       - thisnet
     depends_on:
