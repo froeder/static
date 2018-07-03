@@ -1,7 +1,6 @@
 <template>
     <v-app>
-        <!--<sidebar :drawer="drawer" :clipped="clipped" :items="items"/>-->
-        <toolbar :drawer="drawer" :clipped="clipped" :title="title"/>
+        <toolbar :items="items" :title="title"/>
         <v-content fluid>
             <router-view/>
         </v-content>
@@ -10,21 +9,17 @@
 </template>
 
 <script>
-    import Sidebar from './components/Sidebar'
     import Toolbar from './components/Toolbar'
     import Footerbar from './components/Footerbar'
 
     export default {
         components: {
-            Sidebar,
             Toolbar,
             Footerbar
         },
         data() {
             return {
                 title: 'Medical Records',
-                clipped: false,
-                drawer: false,
                 items: [
                     {
                         icon: 'home',
