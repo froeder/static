@@ -1,5 +1,5 @@
 <template>
-    <v-container fill-height>
+    <v-container>
         <v-layout row align-center>
             <v-flex text-xs-center sm8 offset-sm2 md6 offset-md3>
                 <v-card>
