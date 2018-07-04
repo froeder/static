@@ -4,6 +4,7 @@
         <v-content fluid>
             <router-view/>
         </v-content>
+        <message/>
         <footerbar/>
     </v-app>
 </template>
@@ -11,11 +12,13 @@
 <script>
     import Toolbar from './components/Toolbar'
     import Footerbar from './components/Footerbar'
+    import Message from './components/Message'
 
     export default {
         components: {
             Toolbar,
-            Footerbar
+            Footerbar,
+            Message
         },
         data() {
             return {

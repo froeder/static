@@ -11,7 +11,9 @@ export default new Vuex.Store({
         loading: false,
         fileUploadProgress: 0,
         fileUploadName: null,
-        loggedUser: null
+        loggedUser: null,
+        messageText: '',
+        messageType: 'info'
     },
 
     actions: {
@@ -100,6 +102,16 @@ export default new Vuex.Store({
 
         [events.mutations.SET_LOGGED_USER](state, loggedUser) {
             state.loggedUser = loggedUser
+        },
+
+        [events.mutations.SET_ERROR_MESSAGE](state, messageText) {
+            state.messageText = messageText
+            state.messageType = 'error'
+        },
+
+        [events.mutations.SET_INFO_MESSAGE](state, messageText) {
+            state.messageText = messageText
+            state.messageType = 'info'
         }
     }
 })

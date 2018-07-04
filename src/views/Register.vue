@@ -26,7 +26,6 @@
                                 <router-link to="/login">Voltar</router-link>
                             </v-card-text>
                         </v-form>
-                        <message :show="message.show" :text="message.text" :type="message.type"/>
                     </v-card-text>
                 </v-card>
             </v-flex>
@@ -36,25 +35,16 @@
 
 <script>
     import events from '../events'
-    import Message from '../components/Message'
 
     export default {
         $_veeValidate: {
             validator: 'new'
-        },
-        components: {
-            Message
         },
         data() {
             return {
                 user: {
                     password: null,
                     confirm: null
-                },
-                message: {
-                    show: false,
-                    text: '',
-                    type: 'info'
                 }
             }
         },
@@ -70,9 +60,7 @@
                     await this.$store.dispatch(events.actions.REGISTER, this.user)
                     this.$router.push({path: '/confirmation'})
                 } catch (err) {
-                    this.message.show = true
-                    this.message.text = err
-                    this.message.type = 'error'
+                    this.$store.commit(events.mutations.SET_ERROR_MESSAGE, err)
                 }
             }
         }

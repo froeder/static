@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="dialog" hide-overlay persistent width="300">
+    <v-dialog v-model="show" hide-overlay persistent width="300">
         <v-card color="primary" dark>
             <v-card-text>
                 Por favor espere
@@ -8,3 +8,15 @@
         </v-card>
     </v-dialog>
 </template>
+<script>
+    export default {
+        data() {
+            return {
+                show: false
+            }
+        },
+        methods:{
+
+        }
+    }
+</script>

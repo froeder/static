@@ -22,7 +22,6 @@
                                 <router-link to="/register">Criar nova conta</router-link>
                             </v-card-text>
                         </v-form>
-                        <message :show="message.show" :text="message.text" :type="message.type"/>
                     </v-card-text>
                 </v-card>
             </v-flex>
@@ -32,23 +31,14 @@
 
 <script>
     import events from '../events'
-    import Message from '../components/Message'
 
     export default {
         $_veeValidate: {
             validator: 'new'
         },
-        components: {
-            Message
-        },
         data() {
             return {
-                credentials: {},
-                message: {
-                    show: false,
-                    text: '',
-                    type: 'info'
-                }
+                credentials: {}
             }
         },
         methods: {
@@ -63,9 +53,7 @@
                     await this.$store.dispatch(events.actions.LOGIN, this.credentials)
                     this.$router.push({path: '/internal'})
                 } catch (err) {
-                    this.message.show = true
-                    this.message.text = 'Email ou senha inválidos'
-                    this.message.type = 'error'
+                    this.$store.commit(events.mutations.SET_ERROR_MESSAGE, 'Email ou senha inválidos')
                 }
             }
         }
