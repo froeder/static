@@ -5,7 +5,7 @@ import events from './events'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
     state: {
         token: null,
         loading: false,
@@ -115,3 +115,21 @@ export default new Vuex.Store({
         }
     }
 })
+
+axios.interceptors.request.use((config) => {
+    store.commit(events.mutations.SET_LOADING)
+    return config
+}, (error) => {
+    store.commit(events.mutations.SET_UNLOADING)
+    return Promise.reject(error)
+})
+
+axios.interceptors.response.use((response) => {
+    store.commit(events.mutations.SET_UNLOADING)
+    return response
+}, (error) => {
+    store.commit(events.mutations.SET_UNLOADING)
+    return Promise.reject(error)
+})
+
+export default store

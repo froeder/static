@@ -1,22 +1,12 @@
 <template>
-    <v-dialog v-model="show" hide-overlay persistent width="300">
-        <v-card color="primary" dark>
-            <v-card-text>
-                Por favor espere
-                <v-progress-circular indeterminate color="primary"></v-progress-circular>
-            </v-card-text>
-        </v-card>
-    </v-dialog>
+    <v-layout row justify-center>
+        <v-dialog v-model="$store.state.loading" persistent width="300">
+            <v-card color="primary" dark>
+                <v-card-text>
+                    Por favor, aguarde
+                    <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+    </v-layout>
 </template>
-<script>
-    export default {
-        data() {
-            return {
-                show: false
-            }
-        },
-        methods:{
-
-        }
-    }
-</script>

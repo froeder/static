@@ -1,5 +1,6 @@
 <template>
     <v-app>
+        <loading/>
         <toolbar :items="items" :title="title"/>
         <v-content fluid>
             <router-view/>
@@ -13,12 +14,14 @@
     import Toolbar from './components/Toolbar'
     import Footerbar from './components/Footerbar'
     import Message from './components/Message'
+    import Loading from './components/Loading'
 
     export default {
         components: {
             Toolbar,
             Footerbar,
-            Message
+            Message,
+            Loading
         },
         data() {
             return {
