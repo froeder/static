@@ -6,7 +6,7 @@
                     <v-card-text>
                         <div class="title font-weight-light">Chave de acesso</div>
                         <div class="display-3 font-weight-black">{{token.key}}</div>
-                        <p class="font-weight-thin">Válido até {{token.expirationAt}}</p>
+                        <p class="font-weight-thin">Válido até {{token.expirationAt | moment-datetime}}</p>
                     </v-card-text>
                 </v-card>
             </v-flex>
