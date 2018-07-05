@@ -8,10 +8,10 @@ import Internal from './views/Internal'
 import CreateExam from './views/CreateExam'
 
 import Confirmation from './views/Confirmation'
-import GenerateToken from './views/GenerateToken'
+
 import HistoryPatient from './views/HistoryPatient'
-import Logout from './views/Logout'
-import Token from './views/Token'
+import TokenGenerate from './views/TokenGenerate'
+import TokenValidate from './views/TokenValidate'
 
 Vue.use(Router)
 
@@ -48,24 +48,19 @@ export default new Router({
             component: CreateExam
         },
         {
-            path: '/generateToken',
-            name: 'generateToken',
-            component: GenerateToken
+            path: '/tokenGenerate',
+            name: 'tokenGenerate',
+            component: TokenGenerate
         },
         {
-            path: '/history',
+            path: '/tokenValidate',
+            name: 'tokenValidate',
+            component: TokenValidate
+        },
+        {
+            path: '/historyPatient',
             name: 'historyPatient',
             component: HistoryPatient
-        },
-        {
-            path: '/logout',
-            name: 'logout',
-            component: Logout
-        },
-        {
-            path: '/token',
-            name: 'token',
-            component: Token
         }
     ]
 })

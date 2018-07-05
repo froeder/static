@@ -5,7 +5,8 @@ export default {
         LOGIN: 'LOGIN',
         CHECK_EMAIL: 'CHECK_EMAIL',
         CREATE_EXAM: 'CREATE_EXAM',
-        GET_MY_EXAMS: 'GET_MY_EXAMS'
+        GET_MY_EXAMS: 'GET_MY_EXAMS',
+        GENERATE_TOKEN: 'GENERATE_TOKEN'
     },
     mutations: {
         SET_TOKEN: 'SET_TOKEN',

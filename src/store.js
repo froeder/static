@@ -76,6 +76,11 @@ const store = new Vuex.Store({
         async [events.actions.GET_MY_EXAMS]({state}) {
             const {data} = await axios.get(`/exams/mine/${state.loggedUser}`)
             return data
+        },
+
+        async [events.actions.GENERATE_TOKEN]({state}) {
+            const {data} = await axios.post(`/exams/generateToken/${state.loggedUser}`)
+            return data
         }
     },
 

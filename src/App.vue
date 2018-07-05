@@ -34,18 +34,18 @@
                     },
                     {
                         icon: 'cloud_upload',
-                        title: 'Salvar exame',
+                        title: 'Inserir exame',
                         linkpath: '/createExam'
                     },
                     {
                         icon: 'folder',
-                        title: 'Histórico',
-                        linkpath: '/history'
+                        title: 'Histórico de exames',
+                        linkpath: '/historyPatient'
                     },
                     {
                         icon: 'settings',
-                        title: 'Dar acesso ao médico',
-                        linkpath: '/generateToken'
+                        title: 'Gerar chave de acesso',
+                        linkpath: '/tokenGenerate'
                     },
                     {
                         icon: 'account_box',

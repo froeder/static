@@ -15,7 +15,6 @@
                                 <br>
                                 <file-upload label="Selecione um arquivo PDF" v-model="file" accept="application/pdf"></file-upload>
                             </v-card>
-                            <v-btn flat>CANCELAR</v-btn>
                         </v-stepper-content>
                         <v-stepper-content step="2">
                             <v-form autocomplete="off" v-on:submit.prevent="submit">
@@ -98,7 +97,7 @@
                 this.$store.commit(events.mutations.SET_ERROR_MESSAGE, err)
             },
             navigateToHistoryPage() {
-                setTimeout(() => this.$router.push({path: '/history'}), 1500)
+                setTimeout(() => this.$router.push({path: '/historyPatient'}), 1500)
             }
         }
     }
