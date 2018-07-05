@@ -65,16 +65,17 @@ const store = new Vuex.Store({
             }
         },
 
-        async [events.actions.GET_FILES](context, formData) {
-            return await axios.post('/api/files/:filename', formData)
-        },
-
         async [events.actions.CREATE_EXAM](context, exam) {
             return await axios.post('/exams', exam)
         },
 
         async [events.actions.GET_MY_EXAMS]({state}) {
             const {data} = await axios.get(`/exams/mine/${state.loggedUser}`)
+            return data
+        },
+
+        async [events.actions.GET_AUTHORIZED_EXAMS](context, email) {
+            const {data} = await axios.get(`/exams/authorized/${email}`)
             return data
         },
 

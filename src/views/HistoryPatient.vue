@@ -1,28 +1,23 @@
 <template>
     <v-container>
-        <v-card>
-            <v-card-title><h1>Histórico do paciente </h1></v-card-title>
-            <v-card-text>
-                <v-container grid-list-md>
-                    <v-layout row wrap>
-                        <v-flex xs12 sm4 v-for="exam in examsList">
-                            <v-card>
-                                <v-card-title class="headline">{{exam.type}}</v-card-title>
-                                <v-spacer></v-spacer>
-                                <v-card-text>
-                                    {{exam.date}}
-                                </v-card-text>
-                                <v-card-actions>
-                                    <a :href="createUrl(exam.file)">
-                                        <v-btn>Ver</v-btn>
-                                    </a>
-                                </v-card-actions>
-                            </v-card>
-                        </v-flex>
-                    </v-layout>
-                </v-container>
-            </v-card-text>
-        </v-card>
+        <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+                <v-subheader>Histórico de exames</v-subheader>
+                <v-card>
+                    <v-list two-line>
+                        <template v-for="(item, index) in exams">
+                            <v-list-tile :key="item._id" @click="download(item.file)">
+                                <v-list-tile-content>
+                                    <v-list-tile-title v-html="item.type"></v-list-tile-title>
+                                    <v-list-tile-sub-title>{{item.date | moment-date}}</v-list-tile-sub-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
+                            <v-divider :key="index"/>
+                        </template>
+                    </v-list>
+                </v-card>
+            </v-flex>
+        </v-layout>
     </v-container>
 </template>
 
@@ -32,22 +27,22 @@
     export default {
         data() {
             return {
-                examsList: []
+                exams: []
             }
         },
         async mounted() {
-            this.examsList = await this.$store.dispatch(events.actions.GET_MY_EXAMS)
+            if (this.$route.params && this.$route.params.token) {
+                this.exams = await this.$store.dispatch(events.actions.GET_AUTHORIZED_EXAMS, this.$route.params.token)
+            } else {
+                this.exams = await this.$store.dispatch(events.actions.GET_MY_EXAMS)
+            }
         },
         methods: {
-            createUrl(filename) {
-                return `/api/files/${filename}/download`
+            download(filename) {
+                const url = `/api/files/${filename}/download`
+                window.open(url)
             }
         }
     }
 </script>
-<style scoped>
-    a {
-        text-decoration: none
-    }
-</style>
 

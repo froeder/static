@@ -58,7 +58,7 @@ export default new Router({
             component: TokenValidate
         },
         {
-            path: '/historyPatient',
+            path: '/historyPatient/:token?',
             name: 'historyPatient',
             component: HistoryPatient
         }
