@@ -84,16 +84,21 @@ const store = new Vuex.Store({
             state.token = token
         },
 
-        [events.mutations.SET_FILE_UPLOAD_PROGRESS](state, progress) {
-            state.fileUploadProgress = progress
-        },
-
         [events.mutations.SET_LOADING](state) {
             state.loading = true
         },
 
         [events.mutations.SET_UNLOADING](state) {
             state.loading = false
+        },
+
+        [events.mutations.SET_FILE_UPLOAD_PROGRESS](state, progress) {
+            state.fileUploadProgress = progress
+        },
+
+        [events.mutations.RESET_FILE_UPLOAD](state) {
+            state.fileUploadProgress = 0
+            state.fileUploadName = ''
         },
 
         [events.mutations.SET_FILE_UPLOAD_NAME](state, name) {

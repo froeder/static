@@ -9,6 +9,8 @@
                     <span class="subheading">
                         Adicione aqui todos os seus exames médicos
                     </span>
+                    <br/>
+                    <br/>
                     <v-btn color="primary" to="/createExam">COMEÇAR AGORA</v-btn>
                 </v-flex>
             </v-layout>
