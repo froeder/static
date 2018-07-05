@@ -5,9 +5,8 @@
                 <v-flex text-xs-center>
                     <h3 class="display-1">Bem-vindo</h3>
                     <br>
-                    <v-divider></v-divider>
                     <span class="subheading">
-                        Adicione aqui todos os seus exames médicos
+                        Insira todos os seus exames médicos aqui
                     </span>
                     <br/>
                     <br/>
