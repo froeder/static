@@ -1,88 +1,48 @@
 <template>
     <v-container>
-        <v-card>
-            <v-card-title><h1>Histórico do paciente  </h1> <h4>{{this.$store.state.user_logged}} <br></h4></v-card-title>
-            <v-card-text>
-                <v-container grid-list-md>
-                    <v-layout row wrap>
-                        <v-flex xs12 sm4>
-                            <v-card>
-                                <v-card-title class="headline">Exame Sangue</v-card-title>
-                                <v-spacer></v-spacer>
-                                <v-card-text>
-                                    {{this.fileName}} <br>
-                                    <a href="/api/files/historico-pdf-1529796371985">Exame X</a>
-                                </v-card-text>
-                                <v-card-actions>
-                                    <v-btn>
-                                        Ver
-                                    </v-btn>
-                                </v-card-actions>
-                            </v-card>
-                        </v-flex>
-                        <v-flex xs12 sm4>
-                            <v-card>
-                                <v-card-title class="headline">Exame Urina</v-card-title>
-                                <v-spacer></v-spacer>
-                                <v-card-text>
-                                    {{this.fileName}} <br>
-                                    <a href="/api/files/mozilla-pdf-1529802961547">Exame X</a>
-                                </v-card-text>
-                                <v-card-actions>
-                                    <v-btn>
-                                        Ver
-                                    </v-btn>
-                                </v-card-actions>
-                            </v-card>
-                        </v-flex>
-                        <v-flex xs12 sm4>
-                            <v-card>
-                                <v-card-title class="headline">Exame Sangue</v-card-title>
-                                <v-spacer></v-spacer>
-                                <v-card-text>
-                                    {{this.fileName}} <br>
-                                    <a href="/api/files/receita-federal-do-brasil-pdf-1529802242191">Exame X</a>
-                                </v-card-text>
-                                <v-card-actions>
-                                    <v-btn>
-                                        Ver
-                                    </v-btn>
-                                </v-card-actions>
-                            </v-card>
-                        </v-flex>
-                    </v-layout>
-                    </v-container>    
-            </v-card-text>
-        </v-card>
+        <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+                <v-subheader>Histórico de exames</v-subheader>
+                <v-card>
+                    <v-list two-line>
+                        <template v-for="(item, index) in exams">
+                            <v-list-tile :key="item._id" @click="download(item.file)">
+                                <v-list-tile-content>
+                                    <v-list-tile-title v-html="item.type"></v-list-tile-title>
+                                    <v-list-tile-sub-title>{{item.date | moment-date}}</v-list-tile-sub-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
+                            <v-divider :key="index"/>
+                        </template>
+                    </v-list>
+                </v-card>
+            </v-flex>
+        </v-layout>
     </v-container>
 </template>
 
 <script>
-import axios from 'axios'
+    import events from '../events'
 
-export default {
-    data () {
-        return {
-            fileName: '',
-            user: 'user'
+    export default {
+        data() {
+            return {
+                exams: []
+            }
+        },
+        async mounted() {
+            if (this.$route.params && this.$route.params.token) {
+                this.exams = await this.$store.dispatch(events.actions.GET_AUTHORIZED_EXAMS, this.$route.params.token)
+            } else {
+                this.exams = await this.$store.dispatch(events.actions.GET_MY_EXAMS)
+            }
+        },
+        methods: {
+            download(filename) {
+                const url = `/api/files/${filename}/download`
+                window.open(url)
+            }
         }
-    },
-    methods: {
-        loadPdf (){
-           console.log('cliclou')
-        }
-    },
-     created: function () {
-        console.log('CRIOU')
-        let uri = '/api/files/historico-pdf-1529796371985'
-        axios.get(uri).then((response) => {
-            console.log(response)
-            this.fileName = response.headers.etag
-
-            console.log(this.fileName)
-        })
-        //  axios.get('/api/files/historico-pdf-1529796371985')
     }
-}
 </script>
 

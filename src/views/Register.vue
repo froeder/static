@@ -1,23 +1,30 @@
 <template>
-    <v-container grid-list-xl text-xs-center>
-        <v-layout row wrap>
-            <v-flex xs10 offset-xs1>
+    <v-container>
+        <v-layout row align-center>
+            <v-flex text-xs-center sm8 offset-sm2 md6 offset-md3>
                 <v-card>
-                    <v-card-title>
-                        <h1>Registrando novo usuário</h1>
-                    </v-card-title>
                     <v-card-text>
-                        <v-form ref="form" v-model="valid" lazy-validation autocomplete="off">
-                            <v-text-field v-model="user.email" name="email" v-validate="'required|email'" :error-messages="errors.collect('email')" id="email" label="E-mail" prepend-icon="email" type="texst"
-                                          required></v-text-field>
-                            <v-text-field v-model="user.password" name="password" v-validate="'required|min_value:6'" :error-messages="errors.collect('password')" id="password"  label="Senha" prepend-icon="lock"
-                                          type="password" required></v-text-field>
-                            <v-text-field v-model="repassword" name="password_confirmation" v-validate="'required|min_value:6|confirmed:password'" :error-messages="errors.collect('password_confirmation')" id="password_confirmation" label="Confirma a senha" prepend-icon="lock"
-                                          type="password" required></v-text-field>
-                            <div class="text-xs-center">
-                                <v-btn color="info" :large="true" to="/">Voltar</v-btn>
-                                <v-btn color="success" :large="true" :disabled="!valid" @click="submit">SALVAR</v-btn>
-                            </div>
+                        <v-card-title>
+                            <h2>Cadastrar novo usuário</h2>
+                        </v-card-title>
+                        <v-form autocomplete="off" v-on:submit.prevent="submit">
+                            <v-text-field id="email" prepend-icon="email" name="email" label="E-mail" type="text"
+                                          v-model="user.email" :error-messages="errors.collect('email')"
+                                          v-validate="'required|email|unique'"></v-text-field>
+
+                            <v-text-field id="senha" prepend-icon="lock" name="senha" label="Senha" type="password"
+                                          v-model="user.password" :error-messages="errors.collect('senha')"
+                                          v-validate="'required'"></v-text-field>
+
+                            <v-text-field id="confirma" prepend-icon="lock" name="confirma" label="Confirma" type="password"
+                                          v-model="user.confirm" :error-messages="errors.collect('confirma')"
+                                          v-validate="'required|confirmed:senha'"></v-text-field>
+
+                            <v-btn color="success" block type="submit" :disabled="errors.any()">SALVAR</v-btn>
+                            <v-divider></v-divider>
+                            <v-card-text>
+                                <router-link to="/login">Voltar</router-link>
+                            </v-card-text>
                         </v-form>
                     </v-card-text>
                 </v-card>
@@ -27,66 +34,35 @@
 </template>
 
 <script>
-    /* eslint-disable no-console */
+    import events from '../events'
 
     export default {
         $_veeValidate: {
             validator: 'new'
         },
-        data: () => ({
-            valid: false,
-            user: {
-                email: '',
-                password: ''
-            },
-            repassword:'',
-            dictionary: {
-                pt_br:{
-                    
-                }
-            },
-            dictionary: {
-                pt_br:{
-                    custom: {
-                        email: {
-                            required: () => 'Endereço de e-mail requerido',
-                        },
-                        password: {
-                            required: () => 'Senha requerido',
-                            min_value: () => 'Senha deverá ter pelo menos 6 caracteres'
-                        },
-                        password_confirmation: {
-                            required: () => 'Senha requerida',
-                            min_value: () => 'Senha deverá ter pelo menos 6 caracteres',
-                            confirmed:()  => 'A senhas não conferem'
-                        },
-                    }
+        data() {
+            return {
+                user: {
+                    password: null,
+                    confirm: null
                 }
             }
-        }),
-
-        mounted () {
-            this.$validator.localize('pt_br', this.dictionary)
         },
         methods: {
             async submit() {
-                if (this.$refs.form.validate()) {
-                    try {
-                        await this.$store.dispatch('REGISTER', this.user)
-                        this.$router.push({path: '/confirmation'})
-                    } catch (err) {
-                        //TODO EXIBIR MENSAGEM DE ERRO NA TELA ATRAVES DE UM TOAST OU ALGO DO TIPO
-                        console.log(err)
-                    }
+                const isValid = await this.$validator.validateAll()
+                if (isValid) {
+                    this.register()
                 }
             },
-            async check_email() {
+            async register() {
                 try {
-                    (await this.$store.dispatch('CHECK_EMAIL', this.user.email)).data.exist
+                    await this.$store.dispatch(events.actions.REGISTER, this.user)
+                    this.$router.push({path: '/confirmation'})
                 } catch (err) {
-                    console.log(err)
+                    this.$store.commit(events.mutations.SET_ERROR_MESSAGE, err)
                 }
             }
-        },
+        }
     }
 </script>

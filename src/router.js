@@ -1,29 +1,36 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import Home from './views/Home'
 import Login from './views/Login'
 import Register from './views/Register'
+import Internal from './views/Internal'
+import CreateExam from './views/CreateExam'
+
 import Confirmation from './views/Confirmation'
-import SendFile from './views/SendFile' 
-import GenerateToken from './views/GenerateToken'
+
 import HistoryPatient from './views/HistoryPatient'
-import Logout from './views/Logout'
-import Initial from './views/Initial'
-import Token from './views/Token'
+import TokenGenerate from './views/TokenGenerate'
+import TokenValidate from './views/TokenValidate'
 
 Vue.use(Router)
 
 export default new Router({
     routes: [
         {
+            path: '/',
+            name: 'home',
+            component: Home
+        },
+        {
             path: '/login',
             name: 'login',
             component: Login
         },
         {
-            path: '/home',
-            name: 'home',
-            component: Home
+            path: '/internal',
+            name: 'internal',
+            component: Internal
         },
         {
             path: '/register',
@@ -36,34 +43,24 @@ export default new Router({
             component: Confirmation
         },
         {
-            path: '/upload_pdf',
-            name: 'sendFile',
-            component: SendFile
+            path: '/createExam',
+            name: 'createExam',
+            component: CreateExam
         },
         {
-            path: '/generate_token',
-            name: 'generateToken',
-            component: GenerateToken
+            path: '/tokenGenerate',
+            name: 'tokenGenerate',
+            component: TokenGenerate
         },
         {
-            path: '/history_patient',
+            path: '/tokenValidate',
+            name: 'tokenValidate',
+            component: TokenValidate
+        },
+        {
+            path: '/historyPatient/:token?',
             name: 'historyPatient',
             component: HistoryPatient
-        },
-        {
-            path: '/logout',
-            name: 'logout',
-            component: Logout
-        },
-        {
-            path: '/',
-            name: 'initial',
-            component: Initial
-        },
-        {
-            path: '/token',
-            name: 'token',
-            component: Token
         }
     ]
 })

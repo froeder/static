@@ -1,5 +1,13 @@
 version: '3'
 services:
+  mongo:
+    image: mongo:3
+    ports:
+      - "27017:27017"
+    networks:
+      - thisnet
+    volumes:
+      - mongodata:/data/db
   gateway:
     image: codate/gateway:latest
     ports:
@@ -15,6 +23,7 @@ services:
     depends_on:
       - file
       - auth
+      - exam
   file:
     image: codate/file:latest
     ports:
@@ -34,39 +43,23 @@ services:
       - thisnet
     environment:
       - PORT=8082
-      - URL=mongodb://mongo:27017/auth
+      - DB_URL=mongodb://mongo:27017/auth
+      - DOMAIN=localhost
     depends_on:
       - mongo
   exam:
     image: codate/exam:latest
     ports:
-      - "8084:8084"
+      - "8083:8083"
     networks:
       - thisnet
     environment:
-      - PORT=8084
-      - URL=mongodb://mongo:27017/exam
+      - PORT=8083
+      - DB_URL=mongodb://mongo:27017/exam
+      - URL_FILE_SERVICE=http://localhost/api/files
     depends_on:
       - mongo
-  mongo:
-    image: mongo:3
-    ports:
-      - "27017:27017"
-    networks:
-      - thisnet
-    volumes:
-      - mongodata:/data/db
-  portainer:
-    image: portainer/portainer:latest
-    ports:
-     - "9000:9000"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - portainerdata:/data
-    networks:
-      - thisnet
 volumes:
   mongodata:
-  portainerdata:
 networks:
   thisnet:
