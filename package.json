@@ -6,7 +6,9 @@
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
     "build": "node build/build.js",
-    "prestart": "docker-compose up -d"
+    "prestart": "docker-compose up -d",
+    "build-image": "docker build -t codate/static:latest .",
+    "publish-image": "docker push codate/static:latest"
   },
   "dependencies": {
     "axios": "^0.18.0",
